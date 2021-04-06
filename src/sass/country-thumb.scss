@@ -1,0 +1,35 @@
+.country-thumb {
+  &__inner-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  &__info {
+    display: inline-block;
+
+    font-size: 25px;
+
+    & p {
+      margin: 5px 0;
+    }
+
+    & span {
+      font-weight: bold;
+    }
+
+    & ul {
+      list-style: disc;
+      padding-inline-start: 25px;
+    }
+  }
+
+  & img {
+    display: inline-block;
+    width: 200px;
+    height: 120px;
+  }
+}
