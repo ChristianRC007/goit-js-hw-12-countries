@@ -2,17 +2,19 @@ import API from './fetch-countries.js';
 import listTmpl from '../templates/country-list.hbs';
 import countryTmpl from '../templates/country-thumb.hbs';
 import refs from './references.js';
+import cautionNotify from './noitfy.js';
+
 const debounce = require('lodash.debounce');
 
 refs.input.addEventListener('input', debounce(onSearch, 500));
 
-function renderMarkup(list) {
+function renderListMarkup(list) {
   const murkup = listTmpl(list);
   refs.countrysList.innerHTML = murkup;
   refs.countrysList.style.padding = '5px';
 }
 
-function render(list) {
+function renderCountryThumbMarkup(list) {
   const murkup = countryTmpl(list);
   refs.countrysList.innerHTML = murkup;
 }
@@ -24,11 +26,15 @@ function onSearch(evt) {
     refs.countrysList.style.padding = '0px';
   }
   API.fetchCountries(query).then(dataArray => {
-    if (dataArray.length >= 2 && dataArray.length <= 10) {
-      renderMarkup(dataArray);
+    const dataItemsAmount = dataArray.length;
+    if (dataItemsAmount > 10) {
+      cautionNotify();
     }
-    if (dataArray.length === 1) {
-      render(dataArray);
+    if (dataItemsAmount >= 2 && dataItemsAmount <= 10) {
+      renderListMarkup(dataArray);
+    }
+    if (dataItemsAmount === 1) {
+      renderCountryThumbMarkup(dataArray);
     }
   });
 }
